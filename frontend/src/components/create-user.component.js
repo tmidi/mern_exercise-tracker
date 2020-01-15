@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -10,14 +10,14 @@ export default class CreateUser extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: ""
+      username: ''
     };
   }
 
   componentDidMount() {
     this.setState({
-      users: ["test user"],
-      username: "test user"
+      users: ['test user'],
+      username: 'test user'
     });
   }
 
@@ -37,11 +37,11 @@ export default class CreateUser extends Component {
     console.log(user);
 
     axios
-      .post("http://localhost:5000/users/add", user)
+      .post('http://localhost:5000/users/add', user)
       .then(res => console.log(res.data));
 
     this.setState({
-      username: ""
+      username: ''
     });
   }
 
@@ -50,20 +50,20 @@ export default class CreateUser extends Component {
       <div>
         <h3>Create New User</h3>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+          <div className='form-group'>
             <label>Username: </label>
             <input
-              className="form-control"
-              type="text"
+              className='form-control'
+              type='text'
               onChange={this.onChangeUsername}
               value={this.state.username}
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <input
-              type="submit"
-              value="Create User"
-              className="btn btn-primary"
+              type='submit'
+              value='Create User'
+              className='btn btn-primary'
             />
           </div>
         </form>
