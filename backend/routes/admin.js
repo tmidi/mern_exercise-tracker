@@ -1,13 +1,22 @@
-const router = require("express").Router();
-let Configs = require("../models/configs.model");
+const router = require('express').Router();
+let Configs = require('../models/configs.model');
+const { forwardAuthenticated, ensureAuthenticated } = require('../config/auth');
 
-router.route("/").post((req, res) => {
+router.route('/').post((req, res) => {
   Configs.find()
     .then(configs => res.json(configs))
-    .catch(err => res.status(400).json("Error: " + err));
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route("/add").post((req, res) => {
+router.route('/').get((req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect('/dashboard');
+  } else {
+    res.send('not logged in');
+  }
+});
+
+router.route('/add').post((req, res) => {
   const url = req.body.url;
   const bindDN = req.body.bindDN;
   const bindPass = req.body.bindPass;
@@ -15,17 +24,17 @@ router.route("/add").post((req, res) => {
   const searchFilter = req.body.searchFilter;
 
   const newConfig = new Configs({
-    "ldap.url": url,
-    "ldap.bindDN": bindDN,
-    "ldap.bindPass": bindPass,
-    "ldap.searchBase": searchBase,
-    "ldap.searchFilter": searchFilter
+    'ldap.url': url,
+    'ldap.bindDN': bindDN,
+    'ldap.bindPass': bindPass,
+    'ldap.searchBase': searchBase,
+    'ldap.searchFilter': searchFilter
   });
 
   newConfig
     .save()
-    .then(() => res.json("LDAP Config added"))
-    .catch(err => res.status(400).json("Error: " + err));
+    .then(() => res.json('LDAP Config added'))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // app.post("/admin", function(req, res, next) {
