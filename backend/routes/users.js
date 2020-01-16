@@ -25,6 +25,7 @@ router.post('/login', function(req, res, next) {
     user,
     info
   ) {
+    //console.log(err, user, info);
     if (err) {
       return next(err);
     }
